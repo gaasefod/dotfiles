@@ -27,10 +27,18 @@ map("n", "gd", "<Plug>(coc-definition)")
 map("n", "gy", "<Plug>(coc-type-definition)")
 map("i", "<CR>", "coc#pum#visible() ? coc#pum#confirm() : '<CR>'", { expr = true })
 map("n", "<Tab>", ":lua Show_documentation() <CR>")
-map("n", "<Leader>gj", ":DiffviewOpen <CR>")
-map("n", "<Leader>gk", ":DiffviewClose <CR>")
 
-Show_documentation = function()
+-- lazygit
+local Terminal = require("toggleterm.terminal").Terminal
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float", float_opts = { border = "double" } })
+
+map("n", "<Leader>g", ":lua Lazygit_toggle()<CR>")
+
+function Lazygit_toggle()
+  lazygit:toggle()
+end
+
+function Show_documentation()
   local filetype = vim.bo.filetype
   if filetype == "vim" or filetype == "help" then
     vim.api.nvim_command("h " .. vim.fn.expand("<cword>"))

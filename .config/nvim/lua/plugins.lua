@@ -1,11 +1,3 @@
--- On file write, source the file and sync the packer plugins
-vim.cmd([[
-  augroup packer_sync
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]])
-
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
@@ -53,7 +45,6 @@ return packer.startup(function(use)
 
   -- git
   use "lewis6991/gitsigns.nvim"
-  use "sindrets/diffview.nvim"
   use "tpope/vim-fugitive"
 
   if packer_bootstrap then
