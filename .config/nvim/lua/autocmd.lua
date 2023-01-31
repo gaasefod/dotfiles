@@ -27,3 +27,10 @@ autocmd({"TermOpen"}, {
     vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
   end
 })
+
+-- Open nvim-tree on enter
+autocmd({"VimEnter"}, {
+  callback = function()
+    require("nvim-tree.api").tree.open()
+  end
+})
