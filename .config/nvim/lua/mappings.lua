@@ -23,6 +23,7 @@ map("v", "<A-j>", ":m .+<CR>")
 -- Plugin mappings
 map("n", "<Leader>j", ":NvimTreeToggle<CR>")
 map("n", "<Leader>k", ":Telescope find_files<CR>")
+map("n", "<Leader>a", ":TestSuite<CR>")
 map("n", "gd", "<Plug>(coc-definition)")
 map("n", "gy", "<Plug>(coc-type-definition)")
 map("i", "<CR>", "coc#pum#visible() ? coc#pum#confirm() : '<CR>'", { expr = true })
@@ -30,7 +31,12 @@ map("n", "<Tab>", ":lua Show_documentation() <CR>")
 
 -- lazygit
 local Terminal = require("toggleterm.terminal").Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float", float_opts = { border = "double" } })
+local lazygit = Terminal:new({
+  cmd = "lazygit",
+  hidden = true,
+  direction = "float",
+  float_opts = { border = "double" },
+})
 
 map("n", "<Leader>g", ":lua Lazygit_toggle()<CR>")
 

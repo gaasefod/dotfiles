@@ -23,6 +23,9 @@ return packer.startup(function(use)
 	use "wbthomason/packer.nvim"
   use "nvim-lua/plenary.nvim"
 
+  --  Misc
+  use "vim-test/vim-test"
+
   -- Syntax/Formatting
   use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
   use { "neoclide/coc.nvim", branch = "release" }
