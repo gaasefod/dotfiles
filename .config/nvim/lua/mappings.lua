@@ -36,6 +36,9 @@ local lazygit = Terminal:new({
   hidden = true,
   direction = "float",
   float_opts = { border = "double" },
+  on_open = function()
+    vim.cmd("startinsert!")
+  end,
 })
 
 map("n", "<Leader>g", ":lua Lazygit_toggle()<CR>")
