@@ -1,17 +1,17 @@
 local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path})
-    vim.cmd([[ packadd packer.nvim ]])
-    return true
-  end
-  return false
+	local fn = vim.fn
+	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	if fn.empty(fn.glob(install_path)) > 0 then
+		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+		vim.cmd([[ packadd packer.nvim ]])
+		return true
+	end
+	return false
 end
 
 local packer_bootstrap = ensure_packer()
 
--- Check if we can require packer
+-- check if we can require packer
 local ok, packer = pcall(require, "packer")
 
 if not ok then
@@ -19,38 +19,56 @@ if not ok then
 end
 
 return packer.startup(function(use)
-	-- Packer can manage itself
-	use "wbthomason/packer.nvim"
-  use "nvim-lua/plenary.nvim"
+	-- packer can manage itself
+	use("wbthomason/packer.nvim")
 
-  --  Misc
-  use "vim-test/vim-test"
+	use("nvim-lua/plenary.nvim")
 
-  -- Syntax/Formatting
-  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
-  use { "neoclide/coc.nvim", branch = "release" }
-  use {
-    "prettier/vim-prettier",
-    run = "yarn install --frozen-lockfile --production"
-  }
+	use({
+		"folke/noice.nvim",
+		requires = {
+			"MunifTanjim/nui.nvim",
+		},
+	})
 
-  -- Navigation
-  use "ggandor/leap.nvim"
-  use "akinsho/toggleterm.nvim"
-  use "nvim-tree/nvim-tree.lua"
-  use { "nvim-telescope/telescope.nvim", tag = "0.1.0" }
+	-- lsp
+	use("neovim/nvim-lspconfig")
+	use("hrsh7th/nvim-cmp")
+	use("hrsh7th/cmp-nvim-lsp")
+	use("hrsh7th/cmp-buffer")
+	use("hrsh7th/cmp-path")
+	use("hrsh7th/cmp-nvim-lua")
+	use("jose-elias-alvarez/null-ls.nvim")
+	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 
-  -- Editor
-  use "sainnhe/everforest"
-  use "nvim-tree/nvim-web-devicons"
-  use "nvim-lualine/lualine.nvim"
-  use "lukas-reineke/indent-blankline.nvim"
+	-- navigation
+	use("ggandor/leap.nvim")
+	use("akinsho/toggleterm.nvim")
+	use("nvim-tree/nvim-tree.lua")
+	use({ "nvim-telescope/telescope.nvim", tag = "0.1.0" })
+	use("folke/trouble.nvim")
 
-  -- git
-  use "lewis6991/gitsigns.nvim"
-  use "tpope/vim-fugitive"
+	-- colorschemes
+	use("sainnhe/gruvbox-material")
 
-  if packer_bootstrap then
-    require("packer").sync()
-  end
+	-- editor
+	use("nvim-tree/nvim-web-devicons")
+	use("nvim-lualine/lualine.nvim")
+	use("lukas-reineke/indent-blankline.nvim")
+	use("LunarWatcher/auto-pairs")
+
+	-- snippets
+	use({ "L3MON4D3/LuaSnip", version = "v1.2.1.*" })
+	use("saadparwaiz1/cmp_luasnip")
+
+	-- git (lazygit is configured too, its a must have)
+	use("lewis6991/gitsigns.nvim")
+	use("tpope/vim-fugitive")
+
+	-- testing
+	use("vim-test/vim-test")
+
+	if packer_bootstrap then
+		require("packer").sync()
+	end
 end)

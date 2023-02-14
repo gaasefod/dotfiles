@@ -1,13 +1,17 @@
-### dotfiles 🌲
+## dotfiles 💡
 
-**Details**
+![neovim](./media/nvim.png)
 
-- WM: xfcewm
-- Colorscheme: [Everforest](https://github.com/sainnhe/everforest)
-- xfce4 theme: a slightly modified version of [this](https://github.com/Fausto-Korpsvart/Everforest-GTK-Theme)
-- Bar: xfce4-panel
-- Launcher: [rofi](https://github.com/davatorium/rofi)
-- Terminal: [Alacritty](https://github.com/alacritty/alacritty)
-- Font: JetBrainsMono Nerd Font
-- Firefox theme: [everforest](https://addons.mozilla.org/en-US/firefox/addon/everforest)
-- Music player: [Amberol](https://gitlab.gnome.org/World/amberol)
+![rofi](./media/rofi.png)
+
+my day to day configuration based on the gruvbox theme
+
+I keep changing my neovim configuration so I can't promise the one in this repo is fully up to date
+
+#### details
+
+- wm - xfwm
+- editor - [neovim](https://github.com/neovim/neovim)
+- terminal - [kitty](https://github.com/kovidgoyal/kitty)
+- launcher - [rofi](https://github.com/davatorium/rofi)
+- font - JetBrainsMono Nerd Font

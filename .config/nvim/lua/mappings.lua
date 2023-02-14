@@ -1,57 +1,58 @@
 local map = function(mode, key, action, opts)
-  local option = { noremap = true, silent = true }
-  if opts then
-    option = vim.tbl_extend("force", option, opts)
-  end
-  vim.api.nvim_set_keymap(mode, key, action, option)
+	local option = { noremap = true, silent = true }
+	if opts then
+		option = vim.tbl_extend("force", option, opts)
+	end
+	-- vim.keymap.set allows multiple modes to be set at once
+	vim.keymap.set(mode, key, action, option)
 end
 
 vim.g.mapleader = " "
 
--- Built in mappings
+-- general
 map("n", "<CR>", ":noh<CR>")
 
--- Move lines with Alt + j/k
-map("n", "<A-k>", ":m .-2<CR>")
-map("i", "<A-k>", ":m .-2<CR>")
-map("v", "<A-k>", ":m .-2<CR>")
+-- move lines with Alt + j/k
+map({ "n", "i", "v" }, "<A-k>", ":m .-2<CR>")
+map({ "n", "i", "v" }, "<A-j>", ":m .+<CR>")
 
-map("n", "<A-j>", ":m .+<CR>")
-map("i", "<A-j>", ":m .+<CR>")
-map("v", "<A-j>", ":m .+<CR>")
+-- lsp
+map("n", "gd", vim.lsp.buf.definition)
+map("n", "gD", vim.lsp.buf.declaration)
+map("n", "gr", ":TroubleToggle lsp_references<CR>")
+map("n", "gi", vim.lsp.buf.implementation)
+map("n", "<Tab>", vim.lsp.buf.hover)
+map("n", "<Leader>f", function()
+	vim.lsp.buf.format({ async = true })
+end)
 
--- Plugin mappings
+-- plugins
 map("n", "<Leader>j", ":NvimTreeToggle<CR>")
-map("n", "<Leader>k", ":Telescope find_files<CR>")
-map("n", "<Leader>a", ":TestSuite<CR>")
-map("n", "gd", "<Plug>(coc-definition)")
-map("n", "gy", "<Plug>(coc-type-definition)")
-map("i", "<CR>", "coc#pum#visible() ? coc#pum#confirm() : '<CR>'", { expr = true })
-map("n", "<Tab>", ":lua Show_documentation() <CR>")
 
--- lazygit
+map("n", "<Leader>k", ":Telescope find_files<CR>")
+
+map("n", "<Leader>t", ":ToggleTerm<CR>")
+
+map("n", "<Leader>a", ":TestSuite<CR>")
+map("n", "<Leader>s", ":TestFile<CR>")
+
+map("n", "<Leader>q", ":TroubleToggle<CR>")
+map("n", "<Leader>w", ":TroubleToggle workspace_diagnostics<CR>")
+
+-- lazygit floating terminal
 local Terminal = require("toggleterm.terminal").Terminal
 local lazygit = Terminal:new({
-  cmd = "lazygit",
-  hidden = true,
-  direction = "float",
-  float_opts = { border = "double" },
-  on_open = function()
-    vim.cmd("startinsert!")
-  end,
+	cmd = "lazygit",
+	hidden = true,
+	direction = "float",
+	float_opts = { border = "rounded" },
+	on_open = function()
+		vim.cmd("startinsert!")
+	end,
 })
 
-map("n", "<Leader>g", ":lua Lazygit_toggle()<CR>")
-
 function Lazygit_toggle()
-  lazygit:toggle()
+	lazygit:toggle()
 end
 
-function Show_documentation()
-  local filetype = vim.bo.filetype
-  if filetype == "vim" or filetype == "help" then
-    vim.api.nvim_command("h " .. vim.fn.expand("<cword>"))
-  else
-    vim.fn.CocActionAsync("doHover")
-  end
-end
+map("n", "<Leader>g", Lazygit_toggle)
